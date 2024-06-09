@@ -1,0 +1,78 @@
+{
+  "name": "dating-app",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "shutdownAction": "stopCompose",
+  "containerEnv": {
+    "SHELL": "/bin/bash"
+  },
+  "postCreateCommand": "go mod download",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "golang.go",
+        "maxnatchanon.go-struct-tag-autogen",
+        "IgorSbitnev.error-gutters",
+        "usernamehw.errorlens",
+        "davidanson.vscode-markdownlint",
+        "ms-azuretools.vscode-docker",
+        "shardulm94.trailing-spaces",
+        "Gruntfuggly.todo-tree",
+        "stkb.rewrap",
+        "vscode-icons-team.vscode-icons",
+        "IBM.output-colorizer",
+        "quicktype.quicktype",
+        "nhoizey.gremlins"
+      ],
+      "settings": {
+        "workbench.iconTheme": "vscode-icons",
+        "todo-tree.highlights.customHighlight": {
+          "TODO": {
+            "background": "#00AD58",
+            "foreground": "#fff",
+            "icon": "check",
+            "gutterIcon": true,
+            "iconColour": "#00AD58",
+            "type": "tag"
+          },
+          "FIXME": {
+            "background": "#F06291",
+            "foreground": "#FFF",
+            "iconColour": "#F06291",
+            "gutterIcon": true,
+            "type": "tag"
+          }
+        },
+        "todo-tree.highlights.useColourScheme": true,
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "terminal.integrated.profiles.linux": {
+          "bash": {
+            "path": "/bin/bash"
+          }
+        }
+      }
+    },
+    "settings": {
+      "editor.formatOnSave": true,
+      "files.eol": "\n",
+      "go.useLanguageServer": true,
+      "go.testTimeout": "10s",
+      "go.lintTool": "golangci-lint",
+      "go.lintOnSave": "package",
+      "go.languageServerExperimentalFeatures": {
+        "format": false
+      },
+      "go.formatTool": "goimports",
+      "[go]": {
+        "editor.codeActionsOnSave": {
+          "source.organizeImports": false
+        },
+        "editor.formatOnSave": true
+      },
+      "gopls": {
+        "usePlaceholders": false
+      }
+    }
+  }
+}

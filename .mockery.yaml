@@ -1,0 +1,7 @@
+with-expecter: False
+#keeptree: True
+inpackage: True
+all: True
+recursive: True
+testonly: True
+#output: ./test/mocks

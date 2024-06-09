@@ -1,0 +1,173 @@
+openapi: 3.1.0
+info:
+  version: '1.0'
+  title: go-dating-app
+  summary: Dating App Rest API
+  description: rest api documentation for dating app.
+  contact:
+    name: Alfian
+    url: 'https://github.com/alfi-repo'
+  license:
+    url: 'https://opensource.org/license/mit'
+    name: MIT License
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /auth/register:
+    post:
+      tags:
+        - auth
+      summary: User registration
+      description: Handle user registration.
+      operationId: post-auth-register
+      requestBody:
+        $ref: '#/components/requestBodies/AuthRegistrationRequest'
+      responses:
+        '201':
+          $ref: '#/components/responses/AuthRegistrationSuccessResponse'
+        '400':
+          $ref: '#/components/responses/AuthRegistrationFailedResponse'
+      security: []
+      servers:
+        - url: 'http://localhost:3000'
+  /auth/login:
+    post:
+      tags:
+        - auth
+      summary: User login
+      description: Handle user login.
+      operationId: post-auth-login
+      requestBody:
+        $ref: '#/components/requestBodies/AuthLoginRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/AuthLoginSuccessResponse'
+        '400':
+          $ref: '#/components/responses/AuthLoginFailedResponse'
+      servers:
+        - url: 'http://localhost:3000'
+components:
+  requestBodies:
+    AuthRegistrationRequest:
+      description: Auth registration request.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+                format: email
+                maxLength: 100
+                examples:
+                  - johndoe@example.com
+              password:
+                type: string
+                minLength: 6
+                examples:
+                  - johndoesecret
+            required:
+              - email
+              - password
+    AuthLoginRequest:
+      description: Auth login request.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+                format: email
+                maxLength: 100
+                examples:
+                  - johndoe@example.com
+              password:
+                type: string
+                examples:
+                  - johndoesecret
+            required:
+              - email
+              - password
+  responses:
+    AuthRegistrationSuccessResponse:
+      description: Auth registration success reponse.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                default: true
+              message:
+                type: string
+          examples:
+            registration success:
+              value:
+                success: true
+                message: Registration success
+    AuthRegistrationFailedResponse:
+      description: Auth registration failed reponse.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                default: false
+              message:
+                type: string
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    field:
+                      type: string
+                    message:
+                      type: string
+          examples:
+            Pssword too short:
+              value:
+                success: false
+                message: Check input
+                errors:
+                  - field: password
+                    message: password length must be greater than 6
+    AuthLoginSuccessResponse:
+      description: Auth login success response.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                default: true
+              message:
+                type: string
+                examples:
+                  - login success
+              data:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                  refresh_token:
+                    type: string
+    AuthLoginFailedResponse:
+      description: Auth login failed response.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                default: false
+              message:
+                type: string
+                examples:
+                  - account not found or password invalid
